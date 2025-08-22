@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 
 use crate::{
-    app::App,
-    error_handling::show_anyhow_error,
-    game::{ConsoleType, Game},
+    app::App, components::chip::console_chip, error_handling::show_anyhow_error, game::Game,
 };
 use eframe::egui::{self, Button, Image, RichText};
 use size::Size;
@@ -70,13 +68,10 @@ fn ui_game_card(ui: &mut egui::Ui, game: &Game) -> (bool, bool) {
         ui.set_min_size(CARD_SIZE);
 
         ui.vertical(|ui| {
-            // Top row with console label on the left and size label on the right
+            // Top row with console chip on the left and size label on the right
             ui.horizontal(|ui| {
-                // Console label on the left
-                ui.label(match game.console {
-                    ConsoleType::GameCube => "🎮 GC",
-                    ConsoleType::Wii => "🎾 Wii",
-                });
+                // Console chip on the left
+                console_chip(ui, &game.console);
 
                 // Size label on the right
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
